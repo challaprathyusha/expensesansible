@@ -26,7 +26,7 @@
       community.mysql.mysql_info:
         login_user: root
         login_password: "{{mysql_password}}"
-        login_host: "{{dbhost}}""
+        login_host: "{{dbhost}}"
         filter: databases
       ignore_errors:  yes
       register: userinfo
