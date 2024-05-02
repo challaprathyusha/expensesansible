@@ -1,6 +1,11 @@
 - name: db server configuration
   hosts:  db
   become: yes
+  vars:
+    dbhost: db.expensesnote.site
+  vars_prompt:
+    name: mysql_password
+    prompt: please enter mysql password
   tasks:  
     - name: install mysql
       ansible.builtin.dnf:
@@ -20,6 +25,12 @@
     - name: connect to db using root
       community.mysql.mysql_info:
         login_user: root
-        login_password: ExpensesApp@1
-        login_host: db.expensesnote.site
+        login_password: {{mysql_password}}
+        login_host: {{dbhost}}
         filter: databases
+      ignore_errors:  yes
+      register: userinfo
+
+    - name: print userinfo
+      ansible.builtin.debug:
+        msg:  "userinfo:{{userinfo}}"
