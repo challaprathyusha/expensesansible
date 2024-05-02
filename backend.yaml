@@ -1,6 +1,8 @@
 - name: backend configuration
   hosts:  app
   become: yes
+  vars:
+    dbhost: db.expensesnote.site
   vars_prompt:
     name: mysql_password
     prompt: please enter your password
@@ -38,4 +40,12 @@
       ansible.builtin.copy:
         src:  backend.service
         dest: /etc/systemd/system/backend.service
-         
+    - name: load schema into mysql
+      community.mysql.mysql_db:
+        login_host: "{{dbhost}}"
+        login_user: root
+        login_password: "{{mysql_password}}"
+        state: import
+        target: /app/schema/backend.sql
+        name: all
+
