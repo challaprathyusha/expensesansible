@@ -48,7 +48,7 @@
         - cryptography
         state:  present
         executable: pip3.9
-        
+
     - name: load schema into mysql
       community.mysql.mysql_db:
         login_host: "{{dbhost}}"
@@ -57,4 +57,13 @@
         state: import
         target: /app/schema/backend.sql
         name: all
-
+    - name: reload the service
+      ansible.builtin.systemd_service:
+          name: backend
+          state: reloaded
+          daemon_reload: true
+    - name: start and enable the backend
+      ansible.builtin.systemd_service:
+        name: backend
+        state: started
+        enabled: true
