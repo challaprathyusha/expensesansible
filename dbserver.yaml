@@ -11,6 +11,11 @@
         name: mysqld
         state: started
         enabled:  yes
+    - name: pip module to install pymysql
+      ansible.builtin.pip:
+        name: pymysql
+        state:  present
+
     #check root password is set or not
     - name: connect to db using root
       community.mysql.mysql_info:
