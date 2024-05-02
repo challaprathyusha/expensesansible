@@ -6,6 +6,7 @@
   vars_prompt:
     name: mysql_password
     prompt: please enter mysql password
+    private: no
   tasks:  
     - name: install mysql
       ansible.builtin.dnf:
