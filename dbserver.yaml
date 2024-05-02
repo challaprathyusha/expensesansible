@@ -29,8 +29,12 @@
         login_host: "{{dbhost}}"
         filter: databases
       ignore_errors:  yes
-      register: userinfo
+      register: mysql_connection_output
 
-    - name: print userinfo
+    - name: print mysql connection output
       ansible.builtin.debug:
-        msg:  "userinfo:{{userinfo}}"
+        msg:  "output:{{mysql_connection_output}}"
+
+    - name: set root password
+      ansible.builtin.command:  mysql_secure_installation -uroot -p{{mysql_password}}
+      when: mysql_connection_output.failed is true #boolean datatyep
