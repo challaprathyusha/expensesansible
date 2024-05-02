@@ -18,8 +18,11 @@
         enabled:  yes
     - name: pip module to install pymysql
       ansible.builtin.pip:
-        name: pymysql
+        name:
+        - pymysql
+        - cryptography
         state:  present
+        executable: pip3.9
 
     #check root password is set or not
     - name: connect to db using root
