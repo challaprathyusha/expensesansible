@@ -1,0 +1,13 @@
+- name: frontend configuration
+  hosts:  web
+  become: yes
+  tasks:  
+    - name: install nginx
+      ansible.builtin.dnf:
+        name: nginx
+        state:  latest
+    - name: Start and enable mysql service
+      ansible.builtin.service:
+        name: nginx
+        state: started
+        enabled:  yes
