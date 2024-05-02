@@ -40,6 +40,15 @@
       ansible.builtin.copy:
         src:  backend.service
         dest: /etc/systemd/system/backend.service
+
+    - name: pip module to install pymysql
+      ansible.builtin.pip:
+        name:
+        - pymysql
+        - cryptography
+        state:  present
+        executable: pip3.9
+        
     - name: load schema into mysql
       community.mysql.mysql_db:
         login_host: "{{dbhost}}"
